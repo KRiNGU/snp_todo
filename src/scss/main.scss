@@ -1,0 +1,70 @@
+@import "./nullstyle.scss";
+
+.title {
+    width: min-content;
+    margin: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.todos__filters {
+    display: flex;
+}
+
+.todo__input {
+    width: 100%;
+}
+
+.todo {
+    margin-top: 10px;
+    display: none;
+}
+
+.todo_active {
+    display: initial;
+}
+
+.todo__container {
+    display: none;
+}
+
+.todo__container_active {
+    display: flex;
+}
+
+.todo_complete-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.todo__text {
+    width: 100%;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.todos {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo__change-label {
+    width: 100%;
+    display: none;
+}
+
+.todo__change-label_active {
+    display: initial;
+}
+
+.todo__delete-completed {
+    display: none;
+}
+
+.todo__delete-completed_active {
+    display: initial;
+}

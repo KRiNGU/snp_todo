@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body class="body">
+    <div class="container">
+      <h1 class="title">TODOS</h1>
+      <ul class="todos__filters">
+        <li class="filter"><button class="button filter__all">All</button></li>
+        <li class="filter"><button class="button filter__completed">Completed</button></li>
+        <li class="filter"><button class="button filter__incompleted">Uncompleted</button></li>
+      </ul>
+      <input
+        class="todo__input"
+        type="text"
+        placeholder="What needs to be done"
+      />
+      <ul class="todos"></ul>
+      <div class="todos__left"></div>
+      <button class="button todo__delete-completed">Delete completed</button>
+    </div>
+    <template class="todo__template">
+      <li type="none" class="todo todo_active">
+        <input type="text" class="todo__change-label">
+        <div class="todo__container todo__container_active">
+          <button class="button todo__button-complete"></button>
+          <label class="todo__text"></label>
+          <button class="button todo__button-delete">&times;</button>
+        </div>
+      </li>
+    </template>
+  </body>
+  <script src="./assets/scripts.js"></script>
+</html>
