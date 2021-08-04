@@ -2,13 +2,16 @@ import "./scss/main.scss";
 import ToDo from "./js/ToDo.js";
 const todos = document.querySelector(".todos");
 const deleteButton = document.querySelector('.todo__delete-completed');
-let completed = [];
 const filterAll = document.querySelector('.filter__all');
 const filterCompleted = document.querySelector('.filter__completed');
 const filterIncompleted = document.querySelector('.filter__incompleted');
 let currentFilter = '';
+const completed = document.querySelector('.completed__number');
 
 const doFilterAll = () => {
+    filterCompleted.classList.remove('current');
+    filterIncompleted.classList.remove('current');
+    filterAll.classList.add('current');
     const allTodos = document.querySelectorAll('.todo');
     [...allTodos].forEach((elem) => {
         elem.classList.add('todo_active');
@@ -17,6 +20,9 @@ const doFilterAll = () => {
 }
 
 const doFilterCompleted = () => {
+    filterCompleted.classList.add('current');
+    filterIncompleted.classList.remove('current');
+    filterAll.classList.remove('current');
     const allTodos = document.querySelectorAll('.todo');
     [...allTodos].forEach((elem) => {
         elem.classList.remove('todo_active');
@@ -28,6 +34,9 @@ const doFilterCompleted = () => {
 }
 
 const doFilterIncompleted = () => {
+    filterCompleted.classList.remove('current');
+    filterIncompleted.classList.add('current');
+    filterAll.classList.remove('current');
     const allTodos = document.querySelectorAll('.todo');
     [...allTodos].forEach((elem) => {
         elem.classList.remove('todo_active');
@@ -43,16 +52,13 @@ filterCompleted.addEventListener('click', doFilterCompleted);
 filterIncompleted.addEventListener('click', doFilterIncompleted);
 
 const toggleComplete = (todo) => {
-    const buttonText = todo.querySelector('.todo__button-complete');
-    if (!completed.find(x => x === todo)) {
-        buttonText.textContent = 'Y';
-        completed.push(todo);
+    if ([...todo.classList].includes('todo_complete')) {
+        completed.textContent++;
         deleteButton.classList.add('todo__delete-completed_active');
     }
     else {
-        buttonText.textContent = 'N';
-        completed = completed.filter(elem => todo !== elem);
-        if (completed.length === 0) {
+        completed.textContent--;
+        if (completed.textContent === '0') {
             deleteButton.classList.remove('todo__delete-completed_active');
         }
     }
@@ -72,12 +78,27 @@ const toggleComplete = (todo) => {
 }
 
 const addToDo = (name) => {
-    const newToDo = new ToDo(name, '.todo__template', (elem)=>toggleComplete(elem), document).getTodo();
-    todos.append(newToDo);
+    const newToDo = new ToDo(name, '.todo__template', (elem)=>toggleComplete(elem), () => deleteToDo()).getTodo();
+    if (name) {
+        todos.append(newToDo);
+    }
+}
+
+const deleteToDo = () => {
+    completed.textContent--;
+    if (completed.textContent === '0') {
+        deleteButton.classList.remove('todo__delete-completed_active');
+    }
 }
 
 const deleteCompleted = () => {
-    completed.forEach(elem => elem.remove());
+    const allTodos = document.querySelectorAll('.todo');
+    [...allTodos].forEach((elem) => {
+    if ([...elem.classList].includes('todo_complete')) {
+        elem.remove();
+    }
+});
+    completed.textContent = 0;
     deleteButton.classList.remove('todo__delete-completed_active');
 }
 

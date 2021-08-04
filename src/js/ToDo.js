@@ -1,9 +1,9 @@
 export default class ToDo {
-    constructor(text, tmpSelector, completeFunction, ) {
+    constructor(text, tmpSelector, completeFunction, deleteFunction) {
         this.text = text;
         this.tmpSelector = tmpSelector;
         this.complete = completeFunction;
-        this.inputMod = false;
+        this.deleteFunction = deleteFunction;
     }
 
     _doubleClickEvent = () => {
@@ -23,12 +23,16 @@ export default class ToDo {
 
     _deleteTodo = () => {
         this.todo.remove();
+        if (this.todoCompleteButton.textContent === 'Y') {
+            this.deleteFunction();
+        }
     }
 
     _handleComplete = () => {
         this.todo.classList.toggle('todo_complete');
         this.todoText.classList.toggle('todo_complete-text');
         this.complete(this.todo);
+        this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
     }
 
     

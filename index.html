@@ -11,7 +11,7 @@
     <div class="container">
       <h1 class="title">TODOS</h1>
       <ul class="todos__filters">
-        <li class="filter"><button class="button filter__all">All</button></li>
+        <li class="filter"><button class="button filter__all current">All</button></li>
         <li class="filter"><button class="button filter__completed">Completed</button></li>
         <li class="filter"><button class="button filter__incompleted">Uncompleted</button></li>
       </ul>
@@ -21,7 +21,7 @@
         placeholder="What needs to be done"
       />
       <ul class="todos"></ul>
-      <div class="todos__left"></div>
+      <div class="todos__completed">Completed: <span class="completed__number">0</span></div>
       <button class="button todo__delete-completed">Delete completed</button>
     </div>
     <template class="todo__template">

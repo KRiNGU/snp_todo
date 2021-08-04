@@ -67,9 +67,16 @@ button {
   margin: auto; }
 
 .todos__filters {
-  display: flex; }
+  display: flex;
+  width: 100%;
+  max-width: 280px;
+  justify-content: space-between; }
+
+.current {
+  background-color: #d97b00; }
 
 .todo__input {
+  margin-top: 5px;
   width: 100%; }
 
 .todo {
