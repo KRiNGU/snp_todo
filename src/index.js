@@ -78,9 +78,12 @@ const toggleComplete = (todo) => {
 }
 
 const addToDo = (name) => {
-    const newToDo = new ToDo(name, '.todo__template', (elem)=>toggleComplete(elem), () => deleteToDo()).getTodo();
+    const newToDo = new ToDo(name, '.todo__template', (elem)=>toggleComplete(elem), () => deleteToDo(), currentFilter).getTodo();
     if (name) {
         todos.append(newToDo);
+    }
+    if (currentFilter === 'Completed') {
+        newToDo.classList.remove('todo_active');
     }
 }
 
