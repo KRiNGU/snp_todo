@@ -2,9 +2,9 @@ import "./scss/main.scss";
 import ToDo from "./js/ToDo.js";
 const todos = document.querySelector(".todos");
 const deleteButton = document.querySelector('.todo__delete-completed');
-const filterAll = document.querySelector('.filter__all');
-const filterCompleted = document.querySelector('.filter__completed');
-const filterIncompleted = document.querySelector('.filter__incompleted');
+const filterAll = document.querySelector('.all');
+const filterCompleted = document.querySelector('.completed');
+const filterIncompleted = document.querySelector('.incompleted');
 let currentFilter = 'All';
 let cardMass = JSON.parse(localStorage.getItem('cards'));
 if (!cardMass) {
