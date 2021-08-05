@@ -1,9 +1,11 @@
 export default class ToDo {
-    constructor(text, tmpSelector, completeFunction, deleteFunction) {
+    constructor(text, tmpSelector, completeFunction, deleteFunction, isCompleted, id) {
         this.text = text;
         this.tmpSelector = tmpSelector;
         this.complete = completeFunction;
         this.deleteFunction = deleteFunction;
+        this.isCompleted = isCompleted;
+        this.id = id;
     }
 
     _doubleClickEvent = () => {
@@ -23,16 +25,15 @@ export default class ToDo {
 
     _deleteTodo = () => {
         this.todo.remove();
-        if (this.todoCompleteButton.textContent === 'Y') {
-            this.deleteFunction();
-        }
+        this.deleteFunction(this.isCompleted, this.id);
     }
 
     _handleComplete = () => {
         this.todo.classList.toggle('todo_complete');
         this.todoText.classList.toggle('todo_complete-text');
-        this.complete(this.todo);
         this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
+        this.isCompleted = !this.isCompleted;
+        this.complete(this.todo, this.text, this.isCompleted, this.id);
     }
 
     
@@ -77,6 +78,10 @@ export default class ToDo {
         return this.text;
     }
 
+    getId = () => {
+        return this.id;
+    }
+
     getTodo() {
         this.todo = this._getTemplate().querySelector('.todo').cloneNode(true);
         this.todoText = this.todo.querySelector('.todo__text');
@@ -85,6 +90,11 @@ export default class ToDo {
         this.todoChange = this.todo.querySelector('.todo__change-label');
         this.todoContainer = this.todo.querySelector('.todo__container');
         this.todoCompleteButton.textContent = 'N';
+        if (this.isCompleted) {
+            this.todo.classList.toggle('todo_complete');
+            this.todoText.classList.toggle('todo_complete-text');
+            this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
+        }
         this.todoText.textContent = this.text;
         this.todoChange.value = this.text;
         this._setEventListeners();
