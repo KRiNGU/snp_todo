@@ -1,13 +1,19 @@
 @import "./nullstyle.scss";
 
+* {
+    background: inherit;
+    outline: none;
+}
+
 .title {
+    margin-top: 60px;
     width: min-content;
-    margin: auto;
+    margin-bottom: 20px;
 }
 
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 500px;
     margin: auto;
 }
 
@@ -18,13 +24,22 @@
     justify-content: space-between;
 }
 
+.filter__button {
+    border: none;
+    background: none;
+}
+
 .current {
-    background-color: #d97b00;
+    color: #d97b00;
 }
 
 .todo__input {
     margin-top: 5px;
     width: 100%;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 10px;
+    border: 1px solid #000;
 }
 
 .todo {
@@ -38,10 +53,20 @@
 
 .todo__container {
     display: none;
+    border: 1px solid #000;
+    border-radius: 10px;
+    height: 30px;
 }
 
 .todo__container_active {
     display: flex;
+    align-items: center;
+}
+
+.todo__button-complete {
+    border: none;
+    background: none;
+    border-right: 1px solid #000;
 }
 
 .todo_complete-text {
@@ -55,14 +80,28 @@
     overflow: hidden;
 }
 
+.todo__button-delete {
+    border-radius: 100%;
+    width: 30px;
+    border: 0px;
+}
+
 .todos {
     display: flex;
     flex-direction: column;
 }
 
+.todos__completed {
+    margin: 10px 0;
+}
+
 .todo__change-label {
     width: 100%;
     display: none;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding-left: 35px;
 }
 
 .todo__change-label_active {
@@ -71,8 +110,20 @@
 
 .todo__delete-completed {
     display: none;
+    border: none;
+    background-color: #ccc;
+    border-radius: 25px;
+    height: 20px;
+    line-height: 0px;
 }
 
 .todo__delete-completed_active {
-    display: initial;
+    display: flex;
+    align-items: center;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -11,9 +11,15 @@
     <div class="container">
       <h1 class="title">TODOS</h1>
       <ul class="todos__filters">
-        <li class="filter"><button class="button filter__all current">All</button></li>
-        <li class="filter"><button class="button filter__completed">Completed</button></li>
-        <li class="filter"><button class="button filter__incompleted">Uncompleted</button></li>
+        <li class="filter">
+          <button class="button filter__button all current">All</button>
+        </li>
+        <li class="filter">
+          <button class="button filter__button completed">Completed</button>
+        </li>
+        <li class="filter">
+          <button class="button filter__button incompleted">Uncompleted</button>
+        </li>
       </ul>
       <input
         class="todo__input"
@@ -21,12 +27,16 @@
         placeholder="What needs to be done"
       />
       <ul class="todos"></ul>
-      <div class="todos__completed">Completed: <span class="completed__number">0</span></div>
-      <button class="button todo__delete-completed">Delete completed</button>
+      <footer class="footer">
+        <div class="todos__completed">
+          Completed: <span class="completed__number">0</span>
+        </div>
+        <button class="button todo__delete-completed">Delete completed</button>
+      </footer>
     </div>
     <template class="todo__template">
       <li type="none" class="todo todo_active">
-        <input type="text" class="todo__change-label">
+        <input type="text" class="todo__change-label" />
         <div class="todo__container todo__container_active">
           <button class="button todo__button-complete"></button>
           <label class="todo__text"></label>
