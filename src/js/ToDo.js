@@ -20,6 +20,9 @@ export default class ToDo {
     _onMouseClick = (e) => {
         if (e.target !== this.todoChange && e.target !== this.todoText) {
             this._toggleLabelMod();
+            if (this.todoChange.value === '') {
+                this._deleteTodo();
+            }
         }
     };
 
@@ -31,6 +34,7 @@ export default class ToDo {
     _handleComplete = () => {
         this.todo.classList.toggle('todo_complete');
         this.todoText.classList.toggle('todo_complete-text');
+        this.todoCompleteButton.classList.toggle('todo__button-complete_completed');
         this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
         this.isCompleted = !this.isCompleted;
         this.complete(this.todo, this.text, this.isCompleted, this.id);
@@ -41,6 +45,9 @@ export default class ToDo {
         if (e.code === "Enter") {
             this._toggleLabelMod();
             this.todoText.textContent = this.todoChange.value;
+            if (this.todoChange.value === '') {
+                this._deleteTodo();
+            }
         }
     }
 
@@ -68,6 +75,13 @@ export default class ToDo {
         this.todoButton.addEventListener('click', this._deleteTodo);
         this.todoCompleteButton.addEventListener('click', this._handleComplete);
         this.todoText.addEventListener('click', this._doubleClickEvent);
+        this.todo.addEventListener('mouseover', () => {
+            this.todoButton.classList.remove('hidden');
+        })
+        this.todo.addEventListener('mouseout', () => {
+            this.todoButton.classList.add('hidden');
+        })
+
     }
 
     _getTemplate() {
@@ -93,6 +107,7 @@ export default class ToDo {
         if (this.isCompleted) {
             this.todo.classList.toggle('todo_complete');
             this.todoText.classList.toggle('todo_complete-text');
+            this.todoCompleteButton.classList.toggle('todo__button-complete_completed');
             this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
         }
         this.todoText.textContent = this.text;
