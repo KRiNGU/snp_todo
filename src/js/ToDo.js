@@ -1,11 +1,12 @@
 export default class ToDo {
-    constructor(text, tmpSelector, completeFunction, deleteFunction, isCompleted, id) {
+    constructor(text, tmpSelector, completeFunction, deleteFunction, isCompleted, id, update) {
         this.text = text;
         this.tmpSelector = tmpSelector;
         this.complete = completeFunction;
         this.deleteFunction = deleteFunction;
         this.isCompleted = isCompleted;
         this.id = id;
+        this.update = update;
     }
 
     _doubleClickEvent = () => {
@@ -20,6 +21,7 @@ export default class ToDo {
     _onMouseClick = (e) => {
         if (e.target !== this.todoChange && e.target !== this.todoText) {
             this._toggleLabelMod();
+            this.update(this.todoText.textContent, this.isCompleted, this.id);
             if (this.todoChange.value === '') {
                 this._deleteTodo();
             }
@@ -45,6 +47,7 @@ export default class ToDo {
         if (e.code === "Enter") {
             this._toggleLabelMod();
             this.todoText.textContent = this.todoChange.value;
+            this.update(this.todoText.textContent, this.isCompleted, this.id);
             if (this.todoChange.value === '') {
                 this._deleteTodo();
             }
