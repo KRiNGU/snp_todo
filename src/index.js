@@ -94,8 +94,13 @@ const initToDoMass = (name, isCompleted, id) => {
     }
 }
 
+function update(text, isCompleted, id) {
+    cardMass[cardMass.findIndex(elem => elem.id === id)] = {name: text, isCompleted: isCompleted, id: id};
+    localStorage.setItem('cards', JSON.stringify(cardMass));
+}
+
 const getNewTodo = (name, isCompleted, id) => {
-    return new ToDo(name, '.todo__template', (todo, text, isCompleted, id) => toggleComplete(todo, text, isCompleted, id), (isCompleted, id) => deleteToDo(isCompleted, id), isCompleted, id);
+    return new ToDo(name, '.todo__template', (todo, text, isCompleted, id) => toggleComplete(todo, text, isCompleted, id), (isCompleted, id) => deleteToDo(isCompleted, id), isCompleted, id, (text, isCompleted, id) => update(text, isCompleted, id));
 }
 
 cardMass.forEach(elem => {
