@@ -108,9 +108,14 @@ cardMass.forEach(elem => {
 });
 
 const createToDo = (name) => {
-    if (name) {
+    let newToDoName = name;
+    while (newToDoName.charAt(0) === ' ') {
+        newToDoName = newToDoName.substr(1);
+    }
+    if (newToDoName) {
         const newToDo = getNewTodo(name, false, Date.now());
-        todos.append(newToDo.getTodo());
+        const todo = newToDo.getTodo();
+        todos.append(todo);
         if (currentFilter === 'Completed') {
             todo.classList.remove('todo_active');
         }

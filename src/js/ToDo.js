@@ -48,9 +48,13 @@ export default class ToDo {
             this._toggleLabelMod();
             this.todoText.textContent = this.todoChange.value;
             this.update(this.todoText.textContent, this.isCompleted, this.id);
-            if (this.todoChange.value === '') {
+            if (this.todoChange.value === '') { 
                 this._deleteTodo();
             }
+        }
+        if (e.code ===  "Escape") {
+            this._toggleLabelMod();
+            this.todoChange.value = this.todoText.textContent;
         }
     }
 
