@@ -62,7 +62,7 @@ button {
   outline: none; }
 
 .hidden {
-  display: none; }
+  visibility: hidden; }
 
 .title {
   margin-top: 60px;
@@ -103,10 +103,12 @@ button {
   display: initial; }
 
 .todo__container {
+  position: relative;
   display: none;
   border: 1px solid #000;
   border-radius: 10px;
-  height: 30px; }
+  min-height: 30px;
+  width: 100%; }
 
 .todo__container_active {
   display: flex;
@@ -114,8 +116,7 @@ button {
 
 .todo__button-complete {
   border: none;
-  background: none;
-  border-right: 1px solid #000; }
+  background: none; }
 
 .todo__button-complete_completed {
   color: #33af33; }
@@ -126,15 +127,17 @@ button {
 
 .todo__text {
   width: 100%;
-  margin-left: 10px;
-  overflow: hidden;
-  font-size: 18px; }
+  font-size: 18px;
+  overflow-wrap: anywhere;
+  padding-left: 10px;
+  border-left: black 1px solid; }
 
 .todo__button-delete {
   border-radius: 100%;
-  width: 30px;
   border: 0px;
-  font-size: 20px; }
+  font-size: 20px;
+  padding-left: 2px;
+  height: 100%; }
 
 .todos {
   display: flex;
