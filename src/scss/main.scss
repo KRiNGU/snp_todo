@@ -5,10 +5,6 @@
     outline: none;
 }
 
-.hidden {
-    visibility: hidden;
-}
-
 .title {
     margin-top: 60px;
     width: min-content;
@@ -74,21 +70,22 @@
     background: none;
 }
 
-.todo__button-complete_completed {
-    color: rgb(51, 175, 51);
-}
-
-.todo_complete-text {
-    text-decoration: line-through;
-    color: #999;
-}
-
 .todo__text {
     width: 100%;
     font-size: 18px;
     overflow-wrap: anywhere;
     padding-left: 10px;
     border-left: black 1px solid;
+}
+
+.todo_complete .todo__container {
+    .todo__text {
+        text-decoration: line-through;
+        color: #999;
+    }
+    .todo__button-complete {
+        color: rgb(51, 175, 51);
+    }
 }
 
 .todo__button-delete {
@@ -99,9 +96,21 @@
     height: 100%;
 }
 
+.todo__container_active:not(:hover) .todo__button-delete {
+    display: none;
+}
+
 .todos {
     display: flex;
     flex-direction: column;
+}
+
+.todos.todos_completed .todo_incomplete {
+    display: none;
+}
+
+.todos.todos_incompleted .todo_complete {
+    display: none;
 }
 
 .todos__completed {
