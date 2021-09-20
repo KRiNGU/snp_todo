@@ -61,9 +61,6 @@ button {
   background: inherit;
   outline: none; }
 
-.hidden {
-  visibility: hidden; }
-
 .title {
   margin-top: 60px;
   width: min-content;
@@ -118,19 +115,19 @@ button {
   border: none;
   background: none; }
 
-.todo__button-complete_completed {
-  color: #33af33; }
-
-.todo_complete-text {
-  text-decoration: line-through;
-  color: #999; }
-
 .todo__text {
   width: 100%;
   font-size: 18px;
   overflow-wrap: anywhere;
   padding-left: 10px;
   border-left: black 1px solid; }
+
+.todo_complete .todo__container .todo__text {
+  text-decoration: line-through;
+  color: #999; }
+
+.todo_complete .todo__container .todo__button-complete {
+  color: #33af33; }
 
 .todo__button-delete {
   border-radius: 100%;
@@ -139,9 +136,18 @@ button {
   padding-left: 2px;
   height: 100%; }
 
+.todo__container_active:not(:hover) .todo__button-delete {
+  display: none; }
+
 .todos {
   display: flex;
   flex-direction: column; }
+
+.todos.todos_completed .todo_incomplete {
+  display: none; }
+
+.todos.todos_incompleted .todo_complete {
+  display: none; }
 
 .todos__completed {
   margin: 10px 0; }

@@ -1,159 +1,118 @@
-import "./scss/main.scss";
 import ToDo from "./js/ToDo.js";
-const todos = document.querySelector(".todos");
-const deleteButton = document.querySelector('.todo__delete-completed');
-const filterAll = document.querySelector('.all');
-const filterCompleted = document.querySelector('.completed');
-const filterIncompleted = document.querySelector('.incompleted');
-let currentFilter = 'All';
-let cardMass = JSON.parse(localStorage.getItem('cards'));
-if (!cardMass) {
-    cardMass = [];
-    localStorage.setItem('cards', JSON.stringify(cardMass));
+import "./scss/main.scss";
+const todosEl = document.querySelector(".todos");
+const  deleteButtonEl = document.querySelector('.todo__delete-completed');
+const filterAllEl = document.querySelector('.all');
+const filterCompletedEl = document.querySelector('.completed');
+const filterIncompletedEl = document.querySelector('.incompleted');
+let cardsArray = JSON.parse(localStorage.getItem('cards'));
+if (!cardsArray) {
+    cardsArray = [];
+    updateLocalStorage(cardsArray);
 }
-const completed = document.querySelector('.completed__number');
+const completedEl = document.querySelector('.completed__number');
 
-const doFilterAll = () => {
-    filterCompleted.classList.remove('current');
-    filterIncompleted.classList.remove('current');
-    filterAll.classList.add('current');
-    const allTodos = document.querySelectorAll('.todo');
-    [...allTodos].forEach((elem) => {
-        elem.classList.add('todo_active');
-    });
-    currentFilter = 'All';
+function updateLocalStorage(cardsArray) {
+    localStorage.setItem('cards', JSON.stringify(cardsArray));
 }
 
-const doFilterCompleted = () => {
-    filterCompleted.classList.add('current');
-    filterIncompleted.classList.remove('current');
-    filterAll.classList.remove('current');
-    const allTodos = document.querySelectorAll('.todo');
-    [...allTodos].forEach((elem) => {
-        elem.classList.remove('todo_active');
-        if ([...elem.classList].includes('todo_complete')) {
-            elem.classList.add('todo_active');
-        }
-    });
-    currentFilter = 'Completed';
+const doAll = () => {
+    todosEl.classList.remove('todos_completed');
+    todosEl.classList.remove('todos_incompleted');
 }
 
-const doFilterIncompleted = () => {
-    filterCompleted.classList.remove('current');
-    filterIncompleted.classList.add('current');
-    filterAll.classList.remove('current');
-    const allTodos = document.querySelectorAll('.todo');
-    [...allTodos].forEach((elem) => {
-        elem.classList.remove('todo_active');
-        if (![...elem.classList].includes('todo_complete')){
-            elem.classList.add('todo_active');
-        }
-    });
-    currentFilter = 'Incompleted';
+const doCompleted = () => {
+    todosEl.classList.add('todos_completed');
+    todosEl.classList.remove('todos_incompleted');
 }
 
-filterAll.addEventListener('click', doFilterAll);
-filterCompleted.addEventListener('click', doFilterCompleted);
-filterIncompleted.addEventListener('click', doFilterIncompleted);
+const doIncompleted = () => {
+    todosEl.classList.remove('todos_completed');
+    todosEl.classList.add('todos_incompleted');
+}
 
-const toggleComplete = (todo, text, isCompleted, id) => {
+filterAllEl.addEventListener('click', doAll);
+filterCompletedEl.addEventListener('click', doCompleted);
+filterIncompletedEl.addEventListener('click', doIncompleted);
+
+const toggleComplete = (todo, id) => {
     if ([...todo.classList].includes('todo_complete')) {
-        completed.textContent++;
-        deleteButton.classList.add('todo__delete-completed_active');
+        completedEl.textContent++;
+         deleteButtonEl.classList.add('todo__delete-completed_active');
     }
     else {
-        completed.textContent--;
-        if (completed.textContent === '0') {
-            deleteButton.classList.remove('todo__delete-completed_active');
+        completedEl.textContent--;
+        if (completedEl.textContent === '0') {
+             deleteButtonEl.classList.remove('todo__delete-completed_active');
         }
     }
-    cardMass[cardMass.findIndex(elem => elem.id === id)] = {name: text, isCompleted: isCompleted, id: id};
-    console.log(cardMass);
-    localStorage.setItem('cards', JSON.stringify(cardMass));
-    switch (currentFilter) {
-        case 'All':
-            doFilterAll();
-            break;
-        case 'Completed':
-            doFilterCompleted();
-            break;
-        case 'Incompleted':
-            doFilterIncompleted();
-            break;
-        default:
-            break;
-    }
+    const currentTodo = cardsArray.find(elem => elem.id === id);
+    currentTodo.isCompleted = !currentTodo.isCompleted;
+     updateLocalStorage(cardsArray)
 }
 
 const initToDoMass = (name, isCompleted, id) => {
     const newToDo = getNewTodo(name, isCompleted, id).getTodo();
-    todos.append(newToDo);
-    if (isCompleted) {
-        completed.textContent++;
-        deleteButton.classList.add('todo__delete-completed_active');
-    }
+    todosEl.append(newToDo);
 }
 
-function update(text, isCompleted, id) {
-    cardMass[cardMass.findIndex(elem => elem.id === id)] = {name: text, isCompleted: isCompleted, id: id};
-    localStorage.setItem('cards', JSON.stringify(cardMass));
+function update(text, id) {
+    const currentTodo = cardsArray.find(elem => elem.id === id);
+    currentTodo.name = text;
+     updateLocalStorage(cardsArray)
 }
 
 const getNewTodo = (name, isCompleted, id) => {
     return new ToDo(name, '.todo__template', (todo, text, isCompleted, id) => toggleComplete(todo, text, isCompleted, id), (isCompleted, id) => deleteToDo(isCompleted, id), isCompleted, id, (text, isCompleted, id) => update(text, isCompleted, id));
 }
 
-cardMass.forEach(elem => {
-    initToDoMass(elem.name, elem.isCompleted, elem.id);
-});
-
 const createToDo = (name) => {
-    let newToDoName = name;
-    while (newToDoName.charAt(0) === ' ') {
-        newToDoName = newToDoName.substr(1);
+    let newToDoName = name.trim();
+    if (!newToDoName) {
+        return;
     }
-    if (newToDoName) {
-        const newToDo = getNewTodo(name, false, Date.now());
-        const todo = newToDo.getTodo();
-        todos.append(todo);
-        if (currentFilter === 'Completed') {
-            todo.classList.remove('todo_active');
-        }
-        cardMass.push({name: name, isCompleted: false, id: newToDo.getId()});
-        localStorage.setItem('cards', JSON.stringify(cardMass));
-    }
+    const newToDo = getNewTodo(name, false, Date.now());
+    const todo = newToDo.getTodo();
+    todosEl.append(todo);
+    cardsArray.push({name: name, isCompleted: false, id: newToDo.getId()});
+     updateLocalStorage(cardsArray)
 }
 
 const deleteToDo = (isCompleted, id) => {
     if (isCompleted) {
-        completed.textContent--;
+        completedEl.textContent--;
     }
-    if (completed.textContent === '0') {
-        deleteButton.classList.remove('todo__delete-completed_active');
+    if (completedEl.textContent === '0') {
+        deleteButtonEl.classList.remove('todo__delete-completed_active');
     }
-    cardMass = cardMass.filter(elem => elem.id !== id);
-    localStorage.setItem('cards', JSON.stringify(cardMass));
+    cardsArray = cardsArray.filter(elem => elem.id !== id);
+     updateLocalStorage(cardsArray)
 }
 
 const deleteCompleted = () => {
-    const allTodos = document.querySelectorAll('.todo');
-    [...allTodos].forEach((elem) => {
-        if ([...elem.classList].includes('todo_complete')) {
-            elem.remove();
-        }
-    });
-    cardMass = cardMass.filter((elem) => elem.isCompleted === false);
-    localStorage.setItem('cards', JSON.stringify(cardMass));
-    completed.textContent = 0;
-    deleteButton.classList.remove('todo__delete-completed_active');
+    document.querySelectorAll('.todo.todo_complete').forEach(el => el.remove());
+    cardsArray = cardsArray.filter((elem) => elem.isCompleted === false);
+     updateLocalStorage(cardsArray)
+    completedEl.textContent = 0;
+     deleteButtonEl.classList.remove('todo__delete-completed_active');
 }
 
-function keyPressedInInput(e) {
+function onInputNewTodo(e) {
     if (e.code === "Enter") {
         createToDo(e.target.value);
         e.target.value = '';
     }
 }
 
+cardsArray.forEach(elem => {
+    initToDoMass(elem.name, elem.isCompleted, elem.id); 
+});
+
+const completedCardsNum = cardsArray.filter(task => task.isCompleted).length;
+completedEl.textContent = completedCardsNum
+if (completedCardsNum) {
+  deleteButtonEl.classList.add('todo__delete-completed_active');
+}
+
 document.querySelector('.todo__delete-completed').addEventListener('click', ()=>deleteCompleted())
-document.querySelector('.todo__input').addEventListener('keydown', (e)=>keyPressedInInput(e));
+document.querySelector('.todo__input').addEventListener('keydown', (e)=>onInputNewTodo(e));
