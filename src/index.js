@@ -1,6 +1,6 @@
-import ToDo from "./js/ToDo.js";
-import "./scss/main.scss";
-const todosEl = document.querySelector(".todos");
+import ToDo from './js/ToDo.js';
+import './scss/main.scss';
+const todosEl = document.querySelector('.todos');
 const  deleteButtonEl = document.querySelector('.todo__delete-completed');
 const filterAllEl = document.querySelector('.all');
 const filterCompletedEl = document.querySelector('.completed');
@@ -19,16 +19,25 @@ function updateLocalStorage(cardsArray) {
 const doAll = () => {
     todosEl.classList.remove('todos_completed');
     todosEl.classList.remove('todos_incompleted');
+    filterAllEl.classList.add('current');
+    filterCompletedEl.classList.remove('current');
+    filterIncompletedEl.classList.remove('current');
 }
 
 const doCompleted = () => {
     todosEl.classList.add('todos_completed');
     todosEl.classList.remove('todos_incompleted');
+    filterCompletedEl.classList.add('current');
+    filterAllEl.classList.remove('current');
+    filterIncompletedEl.classList.remove('current');
 }
 
 const doIncompleted = () => {
     todosEl.classList.remove('todos_completed');
     todosEl.classList.add('todos_incompleted');
+    filterIncompletedEl.classList.add('current');
+    filterCompletedEl.classList.remove('current');
+    filterAllEl.classList.remove('current');
 }
 
 filterAllEl.addEventListener('click', doAll);
@@ -98,7 +107,7 @@ const deleteCompleted = () => {
 }
 
 function onInputNewTodo(e) {
-    if (e.code === "Enter") {
+    if (e.code === 'Enter') {
         createToDo(e.target.value);
         e.target.value = '';
     }

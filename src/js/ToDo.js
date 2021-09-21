@@ -29,16 +29,14 @@ export default class ToDo {
     _handleComplete = () => {
         this.todo.classList.toggle('todo_complete');
         this.todo.classList.toggle('todo_incomplete');
-        this.todoText.classList.toggle('todo_complete-text');
-        this.todoCompleteButton.classList.toggle('todo__button-complete_completed');
-        this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
+        this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === 'N' ? 'Y' : 'N';
         this.isCompleted = !this.isCompleted;
         this.complete(this.todo, this.id);
     }
 
     
     _onKeyDown = (e) => {
-        if (e.code === "Enter") {
+        if (e.code === 'Enter') {
             this._toggleLabelMod();
             this.todoText.textContent = this.todoChange.value;
             this.update(this.todoText.textContent, this.id);
@@ -46,7 +44,7 @@ export default class ToDo {
                 this._deleteTodo();
             }
         }
-        if (e.code ===  "Escape") {
+        if (e.code ===  'Escape') {
             this._toggleLabelMod();
             this.todoChange.value = this.todoText.textContent;
         }
@@ -99,7 +97,7 @@ export default class ToDo {
             this.todo.classList.toggle('todo_incomplete');
             this.todoText.classList.toggle('todo_complete-text');
             this.todoCompleteButton.classList.toggle('todo__button-complete_completed');
-            this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === "N" ? "Y" : "N";
+            this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === 'N' ? 'Y' : 'N';
         }
         this.todoText.textContent = this.text;
         this.todoChange.value = this.text;
