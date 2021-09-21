@@ -9,6 +9,12 @@ export default class ToDo {
         this.update = update;
     }
 
+    _handleCompleteView = () => {
+        this.todo.classList.toggle('todo_complete');
+        this.todo.classList.toggle('todo_incomplete');
+        this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === 'N' ? 'Y' : 'N';
+    }
+
     _onChange = () => {
         this.todoText.textContent = this.todoChange.value;
     }
@@ -27,9 +33,7 @@ export default class ToDo {
     }
 
     _handleComplete = () => {
-        this.todo.classList.toggle('todo_complete');
-        this.todo.classList.toggle('todo_incomplete');
-        this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === 'N' ? 'Y' : 'N';
+        this._handleCompleteView();
         this.isCompleted = !this.isCompleted;
         this.complete(this.todo, this.id);
     }
@@ -92,13 +96,8 @@ export default class ToDo {
         this.todoContainer = this.todo.querySelector('.todo__container');
         this.todoCompleteButton.textContent = 'N';
         this.todo.classList.add('todo_incomplete');
-        if (this.isCompleted) {
-            this.todo.classList.toggle('todo_complete');
-            this.todo.classList.toggle('todo_incomplete');
-            this.todoText.classList.toggle('todo_complete-text');
-            this.todoCompleteButton.classList.toggle('todo__button-complete_completed');
-            this.todoCompleteButton.textContent = this.todoCompleteButton.textContent === 'N' ? 'Y' : 'N';
-        }
+        if (this.isCompleted) 
+            this._handleCompleteView();
         this.todoText.textContent = this.text;
         this.todoChange.value = this.text;
         this._setEventListeners();
